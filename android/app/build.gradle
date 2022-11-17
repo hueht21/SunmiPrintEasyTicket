@@ -68,7 +68,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.sunmi:sunmiui:1.1.27'
+    //implementation 'com.sunmi:sunmiui:1.1.27'
     implementation 'com.sunmi:printerlibrary:1.0.19'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

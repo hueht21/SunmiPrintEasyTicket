@@ -185,12 +185,14 @@ public class starPOSPrintHelper {
             handleRemoteException(e);
         }
     }
+    // cái này viết thêm để chỉnh linewap
     public void printLine(int line){
 
         if(mPrinterService == null){
             return;
         }
         try {
+            Log.i("Printer line wrap", line + "");
             mPrinterService.lineWrap(line, null);
         } catch (RemoteException e) {
             handleRemoteException(e);
@@ -248,7 +250,6 @@ public class starPOSPrintHelper {
     /**
      * Get paper specifications
      */
-    // để ý chỗ này
     public String getPrinterPaper(){
         if(mPrinterService == null){
             //TODO Service disconnection processing
@@ -273,6 +274,7 @@ public class starPOSPrintHelper {
 //            return "";
 //        }
 //    }
+
 
     /**
      * Get paper specifications
@@ -350,7 +352,6 @@ public class starPOSPrintHelper {
             //TODO Service disconnection processing
             return;
         }
-
         try {
             try {
                 mPrinterService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, isBold?
@@ -376,7 +377,43 @@ public class starPOSPrintHelper {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
 
+    public void printTextNoLine(String content, float size, boolean isBold, boolean isUnderLine) {
+        if(mPrinterService == null){
+            //TODO Service disconnection processing
+            return;
+        }
+        //Log.i("text",  content  + "");
+        try {
+            try {
+                mPrinterService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, isBold?
+                        WoyouConsts.ENABLE:WoyouConsts.DISABLE);
+            } catch (RemoteException e) {
+                if (isBold) {
+                    mPrinterService.sendRAWData(ESCUtil.boldOn(), null);
+                } else {
+                    mPrinterService.sendRAWData(ESCUtil.boldOff(), null);
+                }
+                Log.i("catch", "line 399 " +e);
+            }
+            try {
+                mPrinterService.setPrinterStyle(WoyouConsts.ENABLE_UNDERLINE, isUnderLine?
+                        WoyouConsts.ENABLE:WoyouConsts.DISABLE);
+            } catch (RemoteException e) {
+                if (isUnderLine) {
+                    mPrinterService.sendRAWData(ESCUtil.underlineWithOneDotWidthOn(), null);
+                } else {
+                    mPrinterService.sendRAWData(ESCUtil.underlineOff(), null);
+                }
+                Log.i("catch", "line 410 " +e);
+            }
+            Log.i("text",  content  + "");
+            mPrinterService.printTextWithFont(content, null, size, null);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            Log.i("catch", "line 415 " +e);
+        }
     }
 
     /**

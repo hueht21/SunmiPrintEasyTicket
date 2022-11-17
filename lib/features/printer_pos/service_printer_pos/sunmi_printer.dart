@@ -3,7 +3,6 @@
 import 'dart:developer';
 
 import 'package:flutter/services.dart';
-import 'package:sunmi_printer_plus/sunmi_style.dart';
 
 class SunmiPrinter {
 
@@ -12,7 +11,6 @@ class SunmiPrinter {
 
   static Future<bool?> startPrinter() async {
     final bool? status = await platform.invokeMethod('BIND_PRINTER_SERVICE');
-    log("${status}");
     return status;
   }
 
@@ -32,10 +30,20 @@ class SunmiPrinter {
   }
 
   static Future<void> printText({required String text, int? size, bool? bold, bool? underLine}) async {
-
-    Map<String, dynamic> arguments = <String, dynamic>{"text": '$text\n', "size" : size, "bold" : bold ,"under_line" : false  };
+    underLine ??= false;
+    bold ??= false;
+    size ??=10;
+    Map<String, dynamic> arguments = <String, dynamic>{"text": '$text\n', "size" : size, "bold" : bold ,"under_line" : underLine  };
     await platform.invokeMethod("PRINT_TEXT", arguments);
-    //await setAlignment(20);
+    await startInitPrinter();
+  }
+  static Future<void> printTextNoLine({required String text, int? size, bool? bold, bool? underLine}) async {
+    underLine ??= false;
+    bold ??= false;
+    size ??=10;
+    Map<String, dynamic> arguments = <String, dynamic>{"text": "$text", "size" : size, "bold" : bold ,"under_line" : underLine  };
+    log(text);
+    await platform.invokeMethod("PRINT_TEXT_NO_LINE", arguments);
     await startInitPrinter();
   }
   static Future<void> setAlignment(int value) async {

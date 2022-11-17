@@ -1,40 +1,44 @@
-
 import 'package:get/get.dart';
-
 import '../../../consts/const.dart';
 import '../service_printer_pos/sunmi_printer.dart';
 
-class HomePrinterController extends GetxController{
+class HomePrinterController extends GetxController {
 
-  //static const platform = MethodChannel('easyticket_b08/method_channel');
-  RxString printerVesion = "Chưa có".obs;
-  RxString printerSerial= "Chưa có".obs;
-  @override
-  void onInit() async {
-    super.onInit();
+  Future<void> configPrinter() async {
     await SunmiPrinter.startPrinter();
-  }
-  Future<void> configPrinter() async{
-    await SunmiPrinter.printLine(1);
-    //await SunmiPrinter.setAlignment(0);
     await SunmiPrinter.printText(
-        text: AppConst.nameCompany, bold: true, size: 19);
-    // await SunmiPrinter.printLine(0);
+        text: AppConst.nameCompany, bold: true, size: 20);
     await SunmiPrinter.printText(
-        text: AppConst.addressConpany, bold: true, size: 17,underLine: true);
+        text: AppConst.addressConpany, bold: true, size: 18, underLine: false);
     await SunmiPrinter.printText(
-        text: "Mã số thuế: 20202020", bold: false, size: 19);
-    await SunmiPrinter.setAlignment(25);
+        text: "${AppConst.taxCodeName} ${AppConst.taxCodeCustomer}", bold: true, size: 17);
+    await SunmiPrinter.setAlignment(1);
     await SunmiPrinter.printText(
-        text: AppConst.nameTicket, bold: true, size: 30);
-    //await SunmiPrinter.setAlignment(15);
+        text: AppConst.nameTicket, bold: true, size: 25);
+    await SunmiPrinter.setAlignment(1);
     await SunmiPrinter.printText(
-        text: "${AppConst.fareTicket} 25,000 đồng", bold: true, size: 25);
+        text: "${AppConst.fareTicket} ${AppConst.moneyTicket} đồng",
+        bold: true,
+        size: 23);
+    await SunmiPrinter.setAlignment(1);
     await SunmiPrinter.printText(
-        text: "${AppConst.ticketStartingDateHP} ${DateTime.now().hour} h ${DateTime.now().minute}", bold: true, size: 20);
-    //await SunmiPrinter.printLine(3);
+        text:
+            "${AppConst.ticketStartingDateHP} ${DateTime.now().hour} h ${DateTime.now().minute} p",
+        bold: true,
+        size: 21);
+    await SunmiPrinter.setAlignment(1);
+    await SunmiPrinter.printText(
+        text:
+            "${AppConst.day} ${DateTime.now().day} ${AppConst.month} ${DateTime.now().month} ${AppConst.year} ${DateTime.now().year}",
+        bold: true,
+        size: 20);
+    await SunmiPrinter.setAlignment(1);
+    await SunmiPrinter.printText(
+        text:
+            "${AppConst.ncc} ${AppConst.nameCompanyNCC} - ${AppConst.nameTaxCode} ${AppConst.taxCode} \n \t ${AppConst.custommerService} ${AppConst.phoneCustomerService}",
+        bold: true,
+        size: 20);
+    await SunmiPrinter.printLine(3);
     await SunmiPrinter.cutPaper();
   }
-
-
 }

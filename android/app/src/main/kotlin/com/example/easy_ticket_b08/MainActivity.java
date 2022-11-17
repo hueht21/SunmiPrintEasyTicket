@@ -39,7 +39,15 @@ public class MainActivity extends FlutterActivity {
                                     boolean bold = call.argument("bold");
                                     boolean underLine = call.argument("under_line");
                                     int size = call.argument("size");
-                                    starPOSPrint.printText(text, size,bold,false);
+                                    starPOSPrint.printText(text, size,bold,underLine);
+                                    result.success(true);
+                                    break;
+                                case "PRINT_TEXT_NO_LINE":
+                                    boolean boldd = call.argument("bold");
+                                    String textt = call.argument("text");
+                                    boolean underLinee = call.argument("under_line");
+                                    int sizee = call.argument("size");
+                                    starPOSPrint.printTextNoLine(textt, sizee,boldd,underLinee);
                                     result.success(true);
                                     break;
                                 case  "CUT_PAPER":
