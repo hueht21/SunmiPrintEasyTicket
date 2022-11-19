@@ -17,4 +17,13 @@ class AppConst {
   static const String taxCodeName = "Mã số thuế:";
   static const String taxCodeCustomer = "12589654";
 
+
+  static const String nameCompany2 = "CÔNG TY CPTVXDMT VÀ VT THÀNH AN";
+  static const String addressConpany2 = "Thôn 7, X.Thọ Lộc, H.Thọ Xuân, Thanh Hoá";
+  static const String nameTicket2 = "VÉ XE KHÁCH";
+  static const String moneyTicket2 = "90,000";
+  static const String ticketStartingDate = "Thời gian xuất  bến: ";
+  static const String location = "Bắc Ninh - Thanh Hoá";
+
+
 }

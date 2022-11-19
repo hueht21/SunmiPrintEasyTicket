@@ -31,7 +31,15 @@ class HomePrinterView extends StatelessWidget {
                 },
                 child: const Text("Ví dụ"),
               ),
-            )
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () async {
+                  await controller.printTicket_ThanhHoa();
+                },
+                child: const Text("Bắc Ninh - Thanh Hoá"),
+              ),
+            ),
           ],
         ),
       ),

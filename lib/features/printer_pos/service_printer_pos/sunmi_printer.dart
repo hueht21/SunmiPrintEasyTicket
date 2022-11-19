@@ -29,21 +29,12 @@ class SunmiPrinter {
     await platform.invokeMethod('LINE_WRAP',arguments);
   }
 
-  static Future<void> printText({required String text, int? size, bool? bold, bool? underLine}) async {
+  static Future<void> printText({required String text, int? size, bool? bold, bool? underLine, String? typeface}) async {
     underLine ??= false;
     bold ??= false;
     size ??=10;
-    Map<String, dynamic> arguments = <String, dynamic>{"text": '$text\n', "size" : size, "bold" : bold ,"under_line" : underLine  };
+    Map<String, dynamic> arguments = <String, dynamic>{"text": '$text\n', "size" : size, "bold" : bold ,"under_line" : underLine};
     await platform.invokeMethod("PRINT_TEXT", arguments);
-    await startInitPrinter();
-  }
-  static Future<void> printTextNoLine({required String text, int? size, bool? bold, bool? underLine}) async {
-    underLine ??= false;
-    bold ??= false;
-    size ??=10;
-    Map<String, dynamic> arguments = <String, dynamic>{"text": "$text", "size" : size, "bold" : bold ,"under_line" : underLine  };
-    log(text);
-    await platform.invokeMethod("PRINT_TEXT_NO_LINE", arguments);
     await startInitPrinter();
   }
   static Future<void> setAlignment(int value) async {

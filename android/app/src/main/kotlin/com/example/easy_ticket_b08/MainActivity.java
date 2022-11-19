@@ -1,8 +1,8 @@
 package com.example.easy_ticket_b08;
 
-import com.example.easy_ticket_b08.utils.starPOSPrintHelper;
-
 import androidx.annotation.NonNull;
+
+import com.example.easy_ticket_b08.utils.SunmiPrintHelper;
 
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
@@ -11,8 +11,25 @@ import io.flutter.plugin.common.MethodChannel;
 
 public class MainActivity extends FlutterActivity {
     private String CHANNEL = "easyticket_b08/method_channel";
+    String font = "SignikaNegative-Bold.ttf";
+    String font2 = "OpenSans-Bold.ttf";
+    String typeFont ="";
 
-    starPOSPrintHelper starPOSPrint = new starPOSPrintHelper();
+    SunmiPrintHelper sunmiPrintHelper = new SunmiPrintHelper();
+    private void checkFont(int size, boolean isbool){
+        // lấy 20 làm size giữa
+        if(size > 20 && isbool == false){
+            typeFont = font;
+        }else if(size == 20 && isbool == true){
+            typeFont = font;
+        }else if(size < 20 && isbool == false){
+            typeFont = font2;
+        }else if(size < 20 && isbool == true){
+            typeFont = font2;
+        }else if(size ==20 && isbool == false){
+            typeFont = font2;
+        }
+    }
 
 
     @Override
@@ -23,15 +40,15 @@ public class MainActivity extends FlutterActivity {
                         (call, result) -> {
                             switch (call.method){
                                 case "BIND_PRINTER_SERVICE" :
-                                    starPOSPrint.initStarPOSPrinterService(MainActivity.this);
+                                    sunmiPrintHelper.initSunmiPrinterService(MainActivity.this);
                                     result.success(true);
                                     break;
                                 case "ENTER_PRINTER_BUFFER":
-                                    starPOSPrint.printExample(MainActivity.this);
+                                    sunmiPrintHelper.printExample(MainActivity.this);
                                     result.success(true);
                                     break;
                                 case "INIT_PRINTER":
-                                    starPOSPrint.initPrinter();
+                                    sunmiPrintHelper.initPrinter();
                                     result.success(true);
                                     break;
                                 case "PRINT_TEXT":
@@ -39,29 +56,22 @@ public class MainActivity extends FlutterActivity {
                                     boolean bold = call.argument("bold");
                                     boolean underLine = call.argument("under_line");
                                     int size = call.argument("size");
-                                    starPOSPrint.printText(text, size,bold,underLine);
-                                    result.success(true);
-                                    break;
-                                case "PRINT_TEXT_NO_LINE":
-                                    boolean boldd = call.argument("bold");
-                                    String textt = call.argument("text");
-                                    boolean underLinee = call.argument("under_line");
-                                    int sizee = call.argument("size");
-                                    starPOSPrint.printTextNoLine(textt, sizee,boldd,underLinee);
+                                    checkFont(size,bold);
+                                    sunmiPrintHelper.printText(text, size,bold,underLine,typeFont);
                                     result.success(true);
                                     break;
                                 case  "CUT_PAPER":
-                                    starPOSPrint.cutpaper();
+                                    sunmiPrintHelper.cutpaper();
                                     result.success(true);
                                     break;
                                 case "SET_ALIGNMENT":
                                     int align = call.argument("alignment");
-                                    starPOSPrint.setAlign(align);
+                                    sunmiPrintHelper.setAlign(align);
                                     result.success(true);
                                     break;
                                 case "LINE_WRAP":
                                     int lines = call.argument("lines");
-                                    starPOSPrint.printLine(lines);
+                                    sunmiPrintHelper.printLine(lines);
                                     result.success(true);
                                     break;
                             }
