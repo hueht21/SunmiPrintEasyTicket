@@ -1,15 +1,13 @@
-import 'package:easy_ticket_b08/routes/app_pages.dart';
+import 'package:easy_ticket_b08/features/printer_pos/views/home_printer.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() {
   runApp(
 
-    GetMaterialApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Application",
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
+      home: HomePrinterView(),
     ),
   );
 }

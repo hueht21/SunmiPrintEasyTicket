@@ -1,10 +1,10 @@
 import 'package:easy_ticket_b08/features/printer_pos/controllers/home_printer_controller.dart';
 import 'package:easy_ticket_b08/features/printer_pos/service_printer_pos/sunmi_printer.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class HomePrinterView extends StatelessWidget {
-  HomePrinterController controller = Get.put(HomePrinterController());
+  final controller = HomePrinterController();
+
 
   @override
   Widget build(BuildContext context) {

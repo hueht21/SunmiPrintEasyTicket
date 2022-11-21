@@ -1,9 +1,8 @@
-import 'package:get/get.dart';
+
 import '../../../consts/const.dart';
-import '../service_printer_pos/printer_bluetooth.dart';
 import '../service_printer_pos/sunmi_printer.dart';
 
-class HomePrinterController extends GetxController {
+class HomePrinterController {
 
   Future<void> configPrinter() async {
     await SunmiPrinter.startPrinter();
