@@ -154,6 +154,7 @@ public class SunmiPrintHelper {
         if(sunmiPrinterService == null){
             //TODO Service disconnection processing
             return;
+            //"String".getBytes();
         }
         try {
             sunmiPrinterService.printerInit(null);
@@ -398,13 +399,15 @@ public class SunmiPrintHelper {
     /**
      * Print a row of a table
      */
-    public void printTable(String[] txts, int[] width, int[] align) {
+    public void printTable(String[] txts, int[] width, int[] align,int size) {
         if(sunmiPrinterService == null){
             //TODO Service disconnection processing
             return;
         }
 
         try {
+            sunmiPrinterService.setFontName("OpenSans-Bold.ttf", null);
+            sunmiPrinterService.setFontSize(size, null);
             sunmiPrinterService.printColumnsString(txts, width, align, null);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -653,20 +656,20 @@ public class SunmiPrintHelper {
                 sunmiPrinterService.printText("------------------------------------------------\n",
                         null);
             }
-            txts[0] = "汉堡";
-            txts[1] = "17¥";
+            txts[0] = "aaaa";
+            txts[1] = "bbbb";
             sunmiPrinterService.printColumnsString(txts, width, align, null);
-            txts[0] = "可乐";
-            txts[1] = "10¥";
+            txts[0] = "ccc";
+            txts[1] = "vvvv";
             sunmiPrinterService.printColumnsString(txts, width, align, null);
-            txts[0] = "薯条";
-            txts[1] = "11¥";
+            txts[0] = "bbbb";
+            txts[1] = "nnnnn";
             sunmiPrinterService.printColumnsString(txts, width, align, null);
-            txts[0] = "炸鸡";
-            txts[1] = "11¥";
+            txts[0] = "mmmm";
+            txts[1] = "qqqq";
             sunmiPrinterService.printColumnsString(txts, width, align, null);
-            txts[0] = "圣代";
-            txts[1] = "10¥";
+            txts[0] = "wwww";
+            txts[1] = "eee";
             sunmiPrinterService.printColumnsString(txts, width, align, null);
             if(paper == 1){
                 sunmiPrinterService.printText("--------------------------------\n", null);
