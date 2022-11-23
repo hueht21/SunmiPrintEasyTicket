@@ -1,8 +1,8 @@
 
-import 'package:easy_ticket_b08/features/printer_pos/service_printer_pos/sunmi_printer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../service_printer_pos/column_maker.dart';
+import '../service_printer_pos/sunmi_printer.dart';
 
 class HomePrinterView extends StatelessWidget {
 
