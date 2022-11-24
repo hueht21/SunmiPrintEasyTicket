@@ -9,13 +9,14 @@ class SunmiPrinter {
 
   static const platform = MethodChannel('sunmi_print_easyticket_b08/method_channel');
 
-  static Future<void> bindPrinterService() async { // Khởi tạo máy in
-    await platform.invokeMethod('BIND_PRINTER_SERVICE');
+  static Future<bool?> bindPrinterService() async { // Khởi tạo máy in
+    final bool? status =  await platform.invokeMethod('BIND_PRINTER_SERVICE');
+    return status;
   }
-  static Future<void> unbindPrinterService() async { // Tắt máy in
-    await platform.invokeMethod('UNBIND_PRINTER_SERVICE');
+  static Future<bool?> unbindPrinterService() async { // Tắt máy in
+    final bool? status = await platform.invokeMethod('UNBIND_PRINTER_SERVICE');
+    return status;
   }
-
   static Future<bool?> startPrinter() async {// start máy in
     final bool? status = await platform.invokeMethod('INIT_PRINTER');
     return status;
