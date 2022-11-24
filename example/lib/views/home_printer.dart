@@ -1,14 +1,10 @@
-
-import 'package:easy_ticket_b08/features/printer_pos/service_printer_pos/sunmi_printer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../service_printer_pos/column_maker.dart';
+import 'package:sunmi_print_ticket/sunmi_printer.dart';
 
 class HomePrinterView extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -24,34 +20,41 @@ class HomePrinterView extends StatelessWidget {
                   await SunmiPrinter.printText(
                       text: AppConst.nameCompany, bold: true, size: 20);
                   await SunmiPrinter.printText(
-                      text: AppConst.addressConpany, bold: false, size: 18, underLine: false);
+                      text: AppConst.addressConpany,
+                      bold: false,
+                      size: 18,
+                      underLine: false);
                   await SunmiPrinter.printText(
-                      text: "${AppConst.taxCodeName} ${AppConst.taxCodeCustomer}", bold: false, size: 20);
+                      text:
+                          "${AppConst.taxCodeName} ${AppConst.taxCodeCustomer}",
+                      bold: false,
+                      size: 20);
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printText(
                       text: AppConst.nameTicket, bold: false, size: 27);
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printText(
-                      text: "${AppConst.fareTicket} ${AppConst.moneyTicket} đồng",
+                      text:
+                          "${AppConst.fareTicket} ${AppConst.moneyTicket} đồng",
                       bold: false,
                       size: 25);
                   await SunmiPrinter.setAlignment(1);
                   //giờ vào
                   await SunmiPrinter.printText(
                       text:
-                      "${AppConst.ticketStartingDateHP} ${DateTime.now().hour} h ${DateTime.now().minute} p",
+                          "${AppConst.ticketStartingDateHP} ${DateTime.now().hour} h ${DateTime.now().minute} p",
                       bold: false,
                       size: 20);
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printText(
                       text:
-                      "${AppConst.day} ${DateTime.now().day} ${AppConst.month} ${DateTime.now().month} ${AppConst.year} ${DateTime.now().year}",
+                          "${AppConst.day} ${DateTime.now().day} ${AppConst.month} ${DateTime.now().month} ${AppConst.year} ${DateTime.now().year}",
                       bold: false,
                       size: 19);
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printText(
                       text:
-                      "${AppConst.ncc} ${AppConst.nameCompanyNCC} - ${AppConst.nameTaxCode} ${AppConst.taxCode} \n \t ${AppConst.custommerService} ${AppConst.phoneCustomerService}",
+                          "${AppConst.ncc} ${AppConst.nameCompanyNCC} - ${AppConst.nameTaxCode} ${AppConst.taxCode} \n \t ${AppConst.custommerService} ${AppConst.phoneCustomerService}",
                       bold: true,
                       size: 17);
                   await SunmiPrinter.printLine(3);
@@ -101,9 +104,15 @@ class HomePrinterView extends StatelessWidget {
                   await SunmiPrinter.printText(
                       text: AppConst.nameCompany2, bold: true, size: 20);
                   await SunmiPrinter.printText(
-                      text: AppConst.addressConpany2, bold: false, size: 18, underLine: false);
+                      text: AppConst.addressConpany2,
+                      bold: false,
+                      size: 18,
+                      underLine: false);
                   await SunmiPrinter.printText(
-                      text: "${AppConst.taxCodeName} ${AppConst.taxCodeCustomer}", bold: false, size: 21);
+                      text:
+                          "${AppConst.taxCodeName} ${AppConst.taxCodeCustomer}",
+                      bold: false,
+                      size: 21);
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printText(
                       text: AppConst.nameTicket2, bold: false, size: 30);
@@ -112,25 +121,27 @@ class HomePrinterView extends StatelessWidget {
                       text: AppConst.location, bold: false, size: 27);
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printText(
-                      text: "${AppConst.fareTicket} ${AppConst.moneyTicket2} đồng",
+                      text:
+                          "${AppConst.fareTicket} ${AppConst.moneyTicket2} đồng",
                       bold: false,
                       size: 25);
 
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printText(
-                      text: "${AppConst.ticketStartingDate} ${DateTime.now().hour} h ${DateTime.now().minute} p ",
+                      text:
+                          "${AppConst.ticketStartingDate} ${DateTime.now().hour} h ${DateTime.now().minute} p ",
                       bold: false,
                       size: 20);
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printText(
                       text:
-                      "${AppConst.day} ${DateTime.now().day} ${AppConst.month} ${DateTime.now().month} ${AppConst.year} ${DateTime.now().year}",
+                          "${AppConst.day} ${DateTime.now().day} ${AppConst.month} ${DateTime.now().month} ${AppConst.year} ${DateTime.now().year}",
                       bold: false,
                       size: 19);
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printText(
                       text:
-                      "${AppConst.ncc} ${AppConst.nameCompanyNCC} - ${AppConst.nameTaxCode} ${AppConst.taxCode} \n \t ${AppConst.custommerService} ${AppConst.phoneCustomerService}",
+                          "${AppConst.ncc} ${AppConst.nameCompanyNCC} - ${AppConst.nameTaxCode} ${AppConst.taxCode} \n \t ${AppConst.custommerService} ${AppConst.phoneCustomerService}",
                       bold: true,
                       size: 17);
 
@@ -165,8 +176,7 @@ class HomePrinterView extends StatelessWidget {
                   await SunmiPrinter.startPrinter();
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printQr(
-                      dataQRCode:
-                          "https://github.com/hueht21",
+                      dataQRCode: "https://github.com/hueht21",
                       modulesize: 5,
                       errorlevel: 2);
                   await SunmiPrinter.printLine(3);
@@ -182,6 +192,7 @@ class HomePrinterView extends StatelessWidget {
     );
   }
 }
+
 class AppConst {
   static const String nameCompany = "CÔNG TY TNHH GIẢI PHÁP ĐÔ THỊ NAM HẢI";
   static const String addressConpany = "Số 33 Ngõ 151 Láng Hạ, Đống Đa, Hà Nội";
@@ -201,15 +212,13 @@ class AppConst {
   static const String taxCodeName = "Mã số thuế:";
   static const String taxCodeCustomer = "12589654";
 
-
   static const String nameCompany2 = "CÔNG TY CPTVXDMT VÀ VT THÀNH AN";
-  static const String addressConpany2 = "Thôn 7, X.Thọ Lộc, H.Thọ Xuân, Thanh Hoá";
+  static const String addressConpany2 =
+      "Thôn 7, X.Thọ Lộc, H.Thọ Xuân, Thanh Hoá";
   static const String nameTicket2 = "VÉ XE KHÁCH";
   static const String moneyTicket2 = "90,000";
   static const String ticketStartingDate = "Thời gian xuất  bến: ";
   static const String location = "Bắc Ninh - Thanh Hoá";
-
-
 }
 
 const String PATTERN_1 = "dd/MM/yyyy";

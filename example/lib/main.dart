@@ -1,9 +1,9 @@
-import 'package:easy_ticket_b08/features/printer_pos/views/home_printer.dart';
 import 'package:flutter/material.dart';
+
+import 'features/printer_pos/views/home_printer.dart';
 
 void main() {
   runApp(
-
     MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Application",
@@ -11,4 +11,3 @@ void main() {
     ),
   );
 }
-
