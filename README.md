@@ -1,31 +1,31 @@
 # sunmi_printer_easyticket
 
 # I have implemented a lot of other features described below, the typeface is bolder
- # Important: 
-  **THIS PACKAGE WILL WORK ONLY IN ANDROID!**
-  - [x] Jump (n) lines
-  - [x] Bold mode on/off
-  - [x] Adjustable font size
-  - [x] Can print qrcode
-  - [x] Can print table
-  - [x] Use SignikaNegative-Bold font as large font
-  - [x] Use OpenSans-Bold font as large font
-  - [x] Set font size 20 as center font size to separate two typefaces
-  - [x] Cut paper - Dedicated method just to cut the line
+# Important:
+**THIS PACKAGE WILL WORK ONLY IN ANDROID!**
+- [x] Jump (n) lines
+- [x] Bold mode on/off
+- [x] Adjustable font size
+- [x] Can print qrcode
+- [x] Can print table
+- [x] Use SignikaNegative-Bold font as large font
+- [x] Use OpenSans-Bold font as large font
+- [x] Set font size 20 as center font size to separate two typefaces
+- [x] Cut paper - Dedicated method just to cut the line
 
 ## Tested Devices
 
-Sunmi V2 Pro 
+Sunmi V2 Pro
 
 ## import packages
-   import 'package:easy_ticket_b08/features/printer_pos/service_printer_pos/sunmi_printer.dart';
+import 'package:easy_ticket_b08/features/printer_pos/service_printer_pos/sunmi_printer.dart';
 // all method from sunmi printer need to async await
 
- await SunmiPrinter.bindPrinterService(); // Initialize the printer
- await SunmiPrinter.startPrinter(); // start printer
- await SunmiPrinter.printLine(3); // Jump (3) lines
- await SunmiPrinter.cutPaper(); // 
- await SunmiPrinter.unbindPrinterService(); // unbind printer
+await SunmiPrinter.bindPrinterService(); // Initialize the printer
+await SunmiPrinter.startPrinter(); // start printer
+await SunmiPrinter.printLine(3); // Jump (3) lines
+await SunmiPrinter.cutPaper(); //
+await SunmiPrinter.unbindPrinterService(); // unbind printer
  ```
 ## Example of printing a parking ticket
     await SunmiPrinter.startPrinter();
