@@ -7,7 +7,7 @@ import 'column_maker.dart';
 
 class SunmiPrinter {
 
-  static const platform = MethodChannel('sunmi_print_easyticket_b08/method_channel');
+  static const platform = MethodChannel('sunmi_print_easyticket_method_channel');
 
   static Future<bool?> bindPrinterService() async { // Khởi tạo máy in
     final bool? status =  await platform.invokeMethod('BIND_PRINTER_SERVICE');

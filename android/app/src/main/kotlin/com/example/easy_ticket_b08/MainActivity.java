@@ -16,7 +16,7 @@ import io.flutter.plugin.common.MethodChannel;
 
 
 public class MainActivity extends FlutterActivity {
-    private String CHANNEL = "sunmi_print_easyticket_b08/method_channel";
+    private String CHANNEL = "sunmi_print_easyticket_method_channel";
     String bigFont = "SignikaNegative-Bold.ttf";
     String smallFont = "OpenSans-Bold.ttf";
     String typeFont ="";
