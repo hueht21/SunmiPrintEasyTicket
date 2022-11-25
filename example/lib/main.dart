@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'features/printer_pos/views/home_printer.dart';
+import 'package:sunmi_printer_helper_example/views/home_printer.dart';
 
 void main() {
   runApp(

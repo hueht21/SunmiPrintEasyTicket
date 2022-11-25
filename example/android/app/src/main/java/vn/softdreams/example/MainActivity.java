@@ -1,4 +1,4 @@
-package vn.softdreams.sunmi_printer_helper_example;
+package vn.softdreams.example;
 
 import io.flutter.embedding.android.FlutterActivity;
 

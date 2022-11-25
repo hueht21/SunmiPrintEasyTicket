@@ -22,5 +22,9 @@ dev_dependencies:
 
 flutter:
 
-  uses-material-design: true
+  plugin:
+    platforms:
+      android:
+        package: com.example.easy_ticket_b08
+        pluginClass: SunmiPrinterPlugin
 
