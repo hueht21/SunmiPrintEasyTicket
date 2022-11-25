@@ -10,51 +10,72 @@ import com.example.easy_ticket_b08.utils.SunmiPrintHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import io.flutter.embedding.android.FlutterActivity;
-import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
+import io.flutter.plugin.common.MethodChannel.Result;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 
 
-public class MainActivity extends FlutterActivity {
+public class SunmiPrinterPlugin  implements FlutterPlugin, MethodCallHandler {
     private String CHANNEL = "sunmi_print_easyticket_b08/method_channel";
     String bigFont = "SignikaNegative-Bold.ttf";
     String smallFont = "OpenSans-Bold.ttf";
-    String typeFont ="";
+    String typeFont = "";
 
-    SunmiPrintHelper sunmiPrintHelper = new SunmiPrintHelper();
-    private void checkFont(int size, boolean isBold){
+    SunmiPrintHelper sunmiPrintHelper;
+
+    private void checkFont(int size, boolean isBold) {
         // lấy 20 làm size giữa
-        if(size > 20 && !isBold){
+        if (size > 20 && !isBold) {
             typeFont = bigFont;
-        }else if(size == 20 && isBold){
+        } else if (size == 20 && isBold) {
             typeFont = bigFont;
-        }else if(size < 20 && !isBold){
+        } else if (size < 20 && !isBold) {
             typeFont = smallFont;
-        }else if(size < 20 && isBold){
+        } else if (size < 20 && isBold) {
             typeFont = smallFont;
-        }else if(size ==20 && !isBold){
+        } else if (size == 20 && !isBold) {
             typeFont = smallFont;
         }
     }
 
+    @Override
+    public void onAttachedToEngine(
+            @NonNull FlutterPluginBinding flutterPluginBinding
+    ) {
+        final MethodChannel channel = new MethodChannel(
+                flutterPluginBinding.getBinaryMessenger(),
+                CHANNEL
+        );
+        sunmiPrintHelper  = new SunmiPrintHelper(flutterPluginBinding.getApplicationContext());
+
+        channel.setMethodCallHandler(this);
+    }
 
     @Override
-    public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
-        super.configureFlutterEngine(flutterEngine);
-        new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
-                .setMethodCallHandler(
-                        (call, result) -> {
-                            switch (call.method){
-                                case "BIND_PRINTER_SERVICE" :
-                                    sunmiPrintHelper.initSunmiPrinterService(MainActivity.this);
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+
+    }
+
+
+    @Override
+    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+//        super.configureFlutterEngine(flutterEngine);
+//        new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
+//                .setMethodCallHandler(
+//                        (call, result) -> {
+                            switch (call.method) {
+                                case "BIND_PRINTER_SERVICE":
+                                    sunmiPrintHelper.initSunmiPrinterService();
                                     result.success(true);
                                     break;
-                                case "UNBIND_PRINTER_SERVICE" :
-                                    sunmiPrintHelper.deInitSunmiPrinterService(MainActivity.this);
+                                case "UNBIND_PRINTER_SERVICE":
+                                    sunmiPrintHelper.deInitSunmiPrinterService();
                                     result.success(true);
                                     break;
                                 case "PRINTER_EXAMPLE":
-                                    sunmiPrintHelper.printExample(MainActivity.this);
+                                    sunmiPrintHelper.printExample();
                                     result.success(true);
                                     break;
                                 case "INIT_PRINTER":
@@ -66,11 +87,11 @@ public class MainActivity extends FlutterActivity {
                                     boolean bold = call.argument("bold");
                                     boolean underLine = call.argument("under_line");
                                     int size = call.argument("size");
-                                    checkFont(size,bold);
-                                    sunmiPrintHelper.printText(text, size,bold,underLine,typeFont);
+                                    checkFont(size, bold);
+                                    sunmiPrintHelper.printText(text, size, bold, underLine, typeFont);
                                     result.success(true);
                                     break;
-                                case  "CUT_PAPER":
+                                case "CUT_PAPER":
                                     sunmiPrintHelper.cutpaper();
                                     result.success(true);
                                     break;
@@ -99,15 +120,16 @@ public class MainActivity extends FlutterActivity {
                                     int height = call.argument("height");
                                     int width = call.argument("width");
                                     int textposition = call.argument("textposition");
-                                    Log.d("PRINT_BARCODE", dataBarCode + symbology + height + width + textposition + "");
-                                    sunmiPrintHelper.printBarCode(dataBarCode,symbology,height,width,textposition);
+                                    Log.d("PRINT_BARCODE",
+                                            dataBarCode + symbology + height + width + textposition + "");
+                                    sunmiPrintHelper.printBarCode(dataBarCode, symbology, height, width, textposition);
                                     result.success(true);
                                     break;
                                 case "PRINT_QRCODE":
                                     String dataQRCode = call.argument("data");
                                     int modulesize = call.argument("modulesize");
                                     int errorlevel = call.argument("errorlevel");
-                                    sunmiPrintHelper.printQr(dataQRCode,modulesize,errorlevel);
+                                    sunmiPrintHelper.printQr(dataQRCode, modulesize, errorlevel);
                                     result.success(true);
                                     break;
                                 case "PRINT_TABLE":
@@ -128,7 +150,7 @@ public class MainActivity extends FlutterActivity {
                                             colsAlign[i] = alignColumn;
                                         }
 
-                                        sunmiPrintHelper.printTable(colsText, colsWidth, colsAlign,fontSize);
+                                        sunmiPrintHelper.printTable(colsText, colsWidth, colsAlign, fontSize);
                                         result.success(true);
                                     } catch (Exception err) {
                                         Log.d("SunmiPrinter", err.getMessage());
@@ -137,11 +159,11 @@ public class MainActivity extends FlutterActivity {
                                 case "PRINT_BITMAP":
                                     Bitmap bitmap = call.argument("bitmap");
                                     int orientation = call.argument("orientation");
-                                    sunmiPrintHelper.printBitmap(bitmap,orientation);
+                                    sunmiPrintHelper.printBitmap(bitmap, orientation);
                                     result.success(true);
                                     break;
                                 case "PRINT_STATUS":
-                                    sunmiPrintHelper.showPrinterStatus(MainActivity.this);
+                                    sunmiPrintHelper.showPrinterStatus();
                                     result.success(true);
                                     break;
                                 case "OPEN_CASH_BOX":
@@ -174,7 +196,7 @@ public class MainActivity extends FlutterActivity {
                                     result.success(isLabelMode);
                                     break;
                                 case "PRINT_TRANS":
-                                    sunmiPrintHelper.printTrans(MainActivity.this,null);
+                                    sunmiPrintHelper.printTrans(null);
                                     result.success(true);
                                     break;
                                 case "CONTROL_LCD":
@@ -214,7 +236,6 @@ public class MainActivity extends FlutterActivity {
                                     break;
 
                             }
-                        }
-                );
+//                        });
     }
 }

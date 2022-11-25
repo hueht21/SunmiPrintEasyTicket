@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.easy_ticket_b08.R;
+//import com.example.easy_ticket_b08.R;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -75,23 +75,23 @@ public class BluetoothUtil {
     public static boolean connectBlueTooth(Context context,Activity activity) {
         if (bluetoothSocket == null) {
             if (getBTAdapter() == null) {
-                Toast.makeText(context,  R.string.toast_3, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context,  R.string.toast_3, Toast.LENGTH_SHORT).show();
                 return false;
             }
             if (!getBTAdapter().isEnabled()) {
-                Toast.makeText(context, R.string.toast_4, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, R.string.toast_4, Toast.LENGTH_SHORT).show();
                 return false;
             }
             BluetoothDevice device;
             if ((device = getDevice(getBTAdapter(),activity)) == null) {
-                Toast.makeText(context, R.string.toast_5, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, R.string.toast_5, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             try {
                 bluetoothSocket = getSocket(device,activity);
             } catch (IOException e) {
-                Toast.makeText(context, R.string.toast_6, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, R.string.toast_6, Toast.LENGTH_SHORT).show();
                 return false;
             }
         }

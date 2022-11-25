@@ -26,16 +26,16 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdk 29
+    compileSdk 33
 
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "vn.softdreams.sunmi_printer_helper_example"
-        minSdkVersion flutter.minSdkVersion
-        targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        applicationId "vn.softdreams.example"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 01
+        versionName "1.0.0"
     }
 
     buildTypes {

@@ -40,13 +40,18 @@ public class SunmiPrintHelper {
      */
     private SunmiPrinterService sunmiPrinterService;
 
-    private static SunmiPrintHelper helper = new SunmiPrintHelper();
+//    private static SunmiPrintHelper helper = new SunmiPrintHelper();
 
-    public SunmiPrintHelper() {}
+    private Context _context;
 
-    public static SunmiPrintHelper getInstance() {
-        return helper;
+    public SunmiPrintHelper(Context context) {
+        this._context = context;
     }
+
+
+//    public static SunmiPrintHelper getInstance() {
+//        return helper;
+//    }
 
     private InnerPrinterCallback innerPrinterCallback = new InnerPrinterCallback() {
         @Override
@@ -65,9 +70,9 @@ public class SunmiPrintHelper {
     /**
      * init sunmi print service
      */
-    public void initSunmiPrinterService(Context context){
+    public void initSunmiPrinterService(){
         try {
-            boolean ret =  InnerPrinterManager.getInstance().bindService(context,
+            boolean ret =  InnerPrinterManager.getInstance().bindService(_context,
                     innerPrinterCallback);
             if(!ret){
                 sunmiPrinter = NoSunmiPrinter;
@@ -80,10 +85,10 @@ public class SunmiPrintHelper {
     /**
      *  deInit sunmi print service
      */
-    public void deInitSunmiPrinterService(Context context){
+    public void deInitSunmiPrinterService(){
         try {
             if(sunmiPrinterService != null){
-                InnerPrinterManager.getInstance().unBindService(context, innerPrinterCallback);
+                InnerPrinterManager.getInstance().unBindService(_context, innerPrinterCallback);
                 sunmiPrinterService = null;
                 sunmiPrinter = LostSunmiPrinter;
             }
@@ -480,7 +485,7 @@ public class SunmiPrintHelper {
      *  enter->first print->commit(get result)->twice print->commit(get result)->exit(don't care
      *  result)
      */
-    public void printTrans(Context context, InnerResultCallback callbcak){
+    public void printTrans(InnerResultCallback callbcak){
         if(sunmiPrinterService == null){
             //TODO Service disconnection processing
             return;
@@ -488,7 +493,7 @@ public class SunmiPrintHelper {
 
         try {
             sunmiPrinterService.enterPrinterBuffer(true);
-            printExample(context);
+            printExample();
             sunmiPrinterService.exitPrinterBufferWithCallback(true, callbcak);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -608,7 +613,7 @@ public class SunmiPrintHelper {
     /**
      *  Sample print receipt
      */
-    public void printExample(Context context){
+    public void printExample(){
         if(sunmiPrinterService == null){
             //TODO Service disconnection processing
             return ;
@@ -692,7 +697,7 @@ public class SunmiPrintHelper {
      * Used to report the real-time query status of the printer, which can be used before each
      * printing
      */
-    public void showPrinterStatus(Context context){
+    public void showPrinterStatus(){
         if(sunmiPrinterService == null){
             //TODO Service disconnection processing
             return ;
@@ -737,7 +742,7 @@ public class SunmiPrintHelper {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        Toast.makeText(_context, result, Toast.LENGTH_LONG).show();
     }
 
     /**
