@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sunmi_print_ticket/sunmi_printer.dart';
+import 'package:sunmi_print_ticket/sunmi_printer_ticket.dart';
+
 
 class HomePrinterView extends StatelessWidget {
   @override
