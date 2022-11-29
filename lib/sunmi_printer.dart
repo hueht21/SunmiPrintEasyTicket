@@ -79,8 +79,9 @@ class SunmiPrinter {
     int len = 128,
   }) async {
     resetFontSize();
-    await printText(text: List.filled(len, ch[0]).join());
+    await printText(text: List.filled(len, ch).join());
   }
+
   ///*line*
   ///
   ///With this method you can draw a line to divide sections.
@@ -89,7 +90,7 @@ class SunmiPrinter {
     int len = 64,
   }) async {
     resetFontSize();
-    await printText(text: List.filled(len, ch[0]).join());
+    await printText(text: List.filled(len, ch).join());
   }
 
   static Future<void> printText(
