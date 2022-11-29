@@ -39,13 +39,6 @@ class SunmiPrinter {
     await platform.invokeMethod("COMMIT_PRINTER_BUFFER");
   }
 
-  ///*cut*
-  ///
-  ///This method will  cut the paper
-  static Future<void> cut() async {
-    await platform.invokeMethod("CUT_PAPER");
-  }
-
   ///*exitTransactionPrint*
   ///
   ///This method will close the transaction
@@ -83,7 +76,17 @@ class SunmiPrinter {
   ///With this method you can draw a line to divide sections.
   static Future<void> line({
     String ch = '-',
-    int len = 31,
+    int len = 128,
+  }) async {
+    resetFontSize();
+    await printText(text: List.filled(len, ch[0]).join());
+  }
+  ///*line*
+  ///
+  ///With this method you can draw a line to divide sections.
+  static Future<void> lineDash({
+    String ch = '- ',
+    int len = 64,
   }) async {
     resetFontSize();
     await printText(text: List.filled(len, ch[0]).join());
