@@ -185,7 +185,40 @@ class HomePrinterView extends StatelessWidget {
                 },
                 child: const Text("qr code"),
               ),
-            )
+            ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () async {
+                  await SunmiPrinter.bindPrinterService();
+                  await SunmiPrinter.startPrinter();
+                  await SunmiPrinter.printText(
+                    text: "cộng hòa xã hội chủ nghĩa việt nam",
+                    size: 10,
+                  );
+                  await SunmiPrinter.printText(
+                    text: "cộng hòa xã hội chủ nghĩa việt nam",
+                    size: 15,
+                  );
+                  await SunmiPrinter.printText(
+                    text: "cộng hòa xã hội chủ nghĩa việt nam",
+                    size: 20,
+                    bold: true,
+                  );
+                  await SunmiPrinter.printText(
+                    text: "cộng hòa xã hội chủ nghĩa việt nam",
+                    size: 35,
+                  );
+                  await SunmiPrinter.printText(
+                      text: "cộng hòa xã hội chủ nghĩa việt nam",
+                      size: 35,
+                      bold: true);
+                  await SunmiPrinter.printLine(3);
+                  await SunmiPrinter.cutPaper();
+                  await SunmiPrinter.unbindPrinterService();
+                },
+                child: const Text("TestFone"),
+              ),
+            ),
           ],
         ),
       ),
