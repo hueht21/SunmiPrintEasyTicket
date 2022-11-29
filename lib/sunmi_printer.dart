@@ -24,6 +24,37 @@ class SunmiPrinter {
     return status;
   }
 
+  ///*startTransactionPrint*
+  ///
+  ///If you want to print in one transaction, you can start the transaction, build your print commands without send to the buffer
+  static Future<void> startTransactionPrint([bool clear = false]) async {
+    Map<String, dynamic> arguments = <String, dynamic>{"clearEnter": clear};
+    await platform.invokeMethod("ENTER_PRINTER_BUFFER", arguments);
+  }
+
+  ///*submitTransactionPrint*
+  ///
+  ///This method will submit your transaction to the bufffer
+  static Future<void> submitTransactionPrint() async {
+    await platform.invokeMethod("COMMIT_PRINTER_BUFFER");
+  }
+
+  ///*cut*
+  ///
+  ///This method will  cut the paper
+  static Future<void> cut() async {
+    await platform.invokeMethod("CUT_PAPER");
+  }
+
+  ///*exitTransactionPrint*
+  ///
+  ///This method will close the transaction
+
+  static Future<void> exitTransactionPrint([bool clear = true]) async {
+    Map<String, dynamic> arguments = <String, dynamic>{"clearExit": clear};
+    await platform.invokeMethod("EXIT_PRINTER_BUFFER", arguments);
+  }
+
   static Future<void> startPrinterExam() async {
     // in ví dụ
     await platform.invokeMethod('PRINTER_EXAMPLE');
