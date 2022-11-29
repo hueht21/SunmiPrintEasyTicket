@@ -55,6 +55,14 @@ class SunmiPrinter {
     await platform.invokeMethod("EXIT_PRINTER_BUFFER", arguments);
   }
 
+  ///*resetFontSize*
+  ///
+  ///This method will reset the font size to the medium (default) size
+  static Future<void> resetFontSize() async {
+    Map<String, dynamic> arguments = <String, dynamic>{"size": 24};
+    await platform.invokeMethod("FONT_SIZE", arguments);
+  }
+
   static Future<void> startPrinterExam() async {
     // in ví dụ
     await platform.invokeMethod('PRINTER_EXAMPLE');
@@ -68,6 +76,17 @@ class SunmiPrinter {
   static Future<void> printLine(int line) async {
     Map<String, dynamic> arguments = <String, dynamic>{"lines": line};
     await platform.invokeMethod('LINE_WRAP', arguments);
+  }
+
+  ///*line*
+  ///
+  ///With this method you can draw a line to divide sections.
+  static Future<void> line({
+    String ch = '-',
+    int len = 31,
+  }) async {
+    resetFontSize();
+    await printText(text: List.filled(len, ch[0]).join());
   }
 
   static Future<void> printText(
