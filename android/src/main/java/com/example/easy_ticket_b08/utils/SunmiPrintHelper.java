@@ -374,7 +374,7 @@ public class SunmiPrintHelper {
             return;
         }
         try {
-            String content = "-----------------------------------------------------------------";
+            String content = "-------------------------------------------------------------------";
             sunmiPrinterService.printTextWithFont(content, "OpenSans-Bold.ttf", 18, null);
         } catch (RemoteException e) {
             e.printStackTrace();
