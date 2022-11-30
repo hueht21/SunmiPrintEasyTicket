@@ -16,39 +16,34 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 
-
-public class SunmiPrinterPlugin  implements FlutterPlugin, MethodCallHandler {
+public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
     private String CHANNEL = "sunmi_print_easyticket_b08/method_channel";
-    String bigFont = "SignikaNegative-Bold.ttf";
-    String smallFont = "OpenSans-Bold.ttf";
+    String bigFont = "BeVietnamPro-Medium.ttf";
+    String bigFontBold = "BeVietnamPro-Bold.ttf";
+    String fontExtraBold = "BeVietnamPro-ExtraBold.ttf";
+    String fontLight = "BeVietnamPro-Light.ttf";
     String typeFont = "";
 
     SunmiPrintHelper sunmiPrintHelper;
 
-    private void checkFont(int size, boolean isBold) {
-        // lấy 20 làm size giữa
-        if (size > 20 && !isBold) {
-            typeFont = bigFont;
-        } else if (size == 20 && isBold) {
-            typeFont = bigFont;
-        } else if (size < 20 && !isBold) {
-            typeFont = smallFont;
-        } else if (size < 20 && isBold) {
-            typeFont = smallFont;
-        } else if (size == 20 && !isBold) {
-            typeFont = smallFont;
+    private void checkFont(boolean isBold, boolean isLight, boolean isExtra) {
+        if (isExtra) {
+            typeFont = fontExtraBold;
+        } else if (isLight) {
+            typeFont = fontLight;
+        } else {
+            typeFont = isBold ? bigFontBold : bigFont;
         }
+
     }
 
     @Override
     public void onAttachedToEngine(
-            @NonNull FlutterPluginBinding flutterPluginBinding
-    ) {
+            @NonNull FlutterPluginBinding flutterPluginBinding) {
         final MethodChannel channel = new MethodChannel(
                 flutterPluginBinding.getBinaryMessenger(),
-                CHANNEL
-        );
-        sunmiPrintHelper  = new SunmiPrintHelper(flutterPluginBinding.getApplicationContext());
+                CHANNEL);
+        sunmiPrintHelper = new SunmiPrintHelper(flutterPluginBinding.getApplicationContext());
 
         channel.setMethodCallHandler(this);
     }
@@ -58,188 +53,186 @@ public class SunmiPrinterPlugin  implements FlutterPlugin, MethodCallHandler {
 
     }
 
-
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-//        super.configureFlutterEngine(flutterEngine);
-//        new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL)
-//                .setMethodCallHandler(
-//                        (call, result) -> {
-                            switch (call.method) {
-                                case "BIND_PRINTER_SERVICE":
-                                    sunmiPrintHelper.initSunmiPrinterService();
-                                    result.success(true);
-                                    break;
-                                case "UNBIND_PRINTER_SERVICE":
-                                    sunmiPrintHelper.deInitSunmiPrinterService();
-                                    result.success(true);
-                                    break;
-                                case "PRINTER_EXAMPLE":
-                                    sunmiPrintHelper.printExample();
-                                    result.success(true);
-                                    break;
-                                case "INIT_PRINTER":
-                                    sunmiPrintHelper.initPrinter();
-                                    result.success(true);
-                                    break;
-                                case "PRINT_TEXT":
-                                    String text = call.argument("text");
-                                    boolean bold = call.argument("bold");
-                                    boolean underLine = call.argument("under_line");
-                                    int size = call.argument("size");
-                                    checkFont(size, bold);
-                                    sunmiPrintHelper.printText(text, size, bold, underLine, typeFont);
-                                    result.success(true);
-                                    break;
-                                case "CUT_PAPER":
-                                    sunmiPrintHelper.cutpaper();
-                                    result.success(true);
-                                    break;
-                                case "SET_ALIGNMENT":
-                                    int align = call.argument("alignment");
-                                    sunmiPrintHelper.setAlign(align);
-                                    result.success(true);
-                                    break;
-                                case "LINE_WRAP":
-                                    int lines = call.argument("lines");
-                                    sunmiPrintHelper.printLine(lines);
-                                    result.success(true);
-                                    break;
+        // super.configureFlutterEngine(flutterEngine);
+        // new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(),
+        // CHANNEL)
+        // .setMethodCallHandler(
+        // (call, result) -> {
+        switch (call.method) {
+            case "BIND_PRINTER_SERVICE":
+                sunmiPrintHelper.initSunmiPrinterService();
+                result.success(true);
+                break;
+            case "UNBIND_PRINTER_SERVICE":
+                sunmiPrintHelper.deInitSunmiPrinterService();
+                result.success(true);
+                break;
+            case "PRINTER_EXAMPLE":
+                sunmiPrintHelper.printExample();
+                result.success(true);
+                break;
+            case "INIT_PRINTER":
+                sunmiPrintHelper.initPrinter();
+                result.success(true);
+                break;
+            case "PRINT_TEXT":
+                String text = call.argument("text");
+                boolean bold = call.argument("bold");
+                boolean underLine = call.argument("under_line");
+                boolean isLight = call.argument("under_line");
+                boolean isExtra = call.argument("under_line");
+                int size = call.argument("size");
+                checkFont(bold, isLight, isExtra);
+                sunmiPrintHelper.printText(text, size, bold, underLine, typeFont);
+                result.success(true);
+                break;
+            case "CUT_PAPER":
+                sunmiPrintHelper.cutpaper();
+                result.success(true);
+                break;
+            case "SET_ALIGNMENT":
+                int align = call.argument("alignment");
+                sunmiPrintHelper.setAlign(align);
+                result.success(true);
+                break;
+            case "LINE_WRAP":
+                int lines = call.argument("lines");
+                sunmiPrintHelper.printLine(lines);
+                result.success(true);
+                break;
 
-                                case "PRINTER_VERSION":
-                                    String version = sunmiPrintHelper.getPrinterVersion();
-                                    result.success(version);
-                                    break;
-                                case "PRINTER_SERIALNO":
-                                    String serialNo = sunmiPrintHelper.getPrinterSerialNo();
-                                    result.success(serialNo);
-                                    break;
-                                case "PRINT_BARCODE":
-                                    String dataBarCode = call.argument("data");
-                                    int symbology = call.argument("symbology");
-                                    int height = call.argument("height");
-                                    int width = call.argument("width");
-                                    int textposition = call.argument("textposition");
-                                    Log.d("PRINT_BARCODE",
-                                            dataBarCode + symbology + height + width + textposition + "");
-                                    sunmiPrintHelper.printBarCode(dataBarCode, symbology, height, width, textposition);
-                                    result.success(true);
-                                    break;
-                                case "PRINT_DRAW_ROW" :
-                                    sunmiPrintHelper.printDrawRow();
-                                    result.success(true);
-                                    break;
-                                case "PRINT_QRCODE":
-                                    String dataQRCode = call.argument("data");
-                                    int modulesize = call.argument("modulesize");
-                                    int errorlevel = call.argument("errorlevel");
-                                    sunmiPrintHelper.printQr(dataQRCode, modulesize, errorlevel);
-                                    result.success(true);
-                                    break;
-                                case "PRINT_TABLE":
-                                    String colsStr = call.argument("cols");
-                                    int fontSize = call.argument("size");
-                                    try {
-                                        JSONArray cols = new JSONArray(colsStr);
-                                        String[] colsText = new String[cols.length()];
-                                        int[] colsWidth = new int[cols.length()];
-                                        int[] colsAlign = new int[cols.length()];
-                                        for (int i = 0; i < cols.length(); i++) {
-                                            JSONObject col = cols.getJSONObject(i);
-                                            String textColumn = col.getString("text");
-                                            int widthColumn = col.getInt("width");
-                                            int alignColumn = col.getInt("align");
-                                            colsText[i] = textColumn;
-                                            colsWidth[i] = widthColumn;
-                                            colsAlign[i] = alignColumn;
-                                        }
+            case "PRINTER_VERSION":
+                String version = sunmiPrintHelper.getPrinterVersion();
+                result.success(version);
+                break;
+            case "PRINTER_SERIALNO":
+                String serialNo = sunmiPrintHelper.getPrinterSerialNo();
+                result.success(serialNo);
+                break;
+            case "PRINT_BARCODE":
+                String dataBarCode = call.argument("data");
+                int symbology = call.argument("symbology");
+                int height = call.argument("height");
+                int width = call.argument("width");
+                int textposition = call.argument("textposition");
+                Log.d("PRINT_BARCODE",
+                        dataBarCode + symbology + height + width + textposition + "");
+                sunmiPrintHelper.printBarCode(dataBarCode, symbology, height, width, textposition);
+                result.success(true);
+                break;
+            case "PRINT_QRCODE":
+                String dataQRCode = call.argument("data");
+                int modulesize = call.argument("modulesize");
+                int errorlevel = call.argument("errorlevel");
+                sunmiPrintHelper.printQr(dataQRCode, modulesize, errorlevel);
+                result.success(true);
+                break;
+            case "PRINT_TABLE":
+                String colsStr = call.argument("cols");
+                int fontSize = call.argument("size");
+                try {
+                    JSONArray cols = new JSONArray(colsStr);
+                    String[] colsText = new String[cols.length()];
+                    int[] colsWidth = new int[cols.length()];
+                    int[] colsAlign = new int[cols.length()];
+                    for (int i = 0; i < cols.length(); i++) {
+                        JSONObject col = cols.getJSONObject(i);
+                        String textColumn = col.getString("text");
+                        int widthColumn = col.getInt("width");
+                        int alignColumn = col.getInt("align");
+                        colsText[i] = textColumn;
+                        colsWidth[i] = widthColumn;
+                        colsAlign[i] = alignColumn;
+                    }
 
-                                        sunmiPrintHelper.printTable(colsText, colsWidth, colsAlign, fontSize);
-                                        result.success(true);
-                                    } catch (Exception err) {
-                                        Log.d("SunmiPrinter", err.getMessage());
-                                    }
-                                    break;
-                                case "PRINT_BITMAP":
-                                    Bitmap bitmap = call.argument("bitmap");
-                                    int orientation = call.argument("orientation");
-                                    sunmiPrintHelper.printBitmap(bitmap, orientation);
-                                    result.success(true);
-                                    break;
-                                case "PRINT_STATUS":
-                                    String statusPrint = sunmiPrintHelper.showPrinterStatus();
-                                    result.success(statusPrint);
-                                    break;
-                                case "OPEN_CASH_BOX":
-                                    sunmiPrintHelper.openCashBox();
-                                    result.success(true);
-                                    break;
-                                case "SENT_RAW_DATA":
-                                    byte[] dataRaw = call.argument("data");
-                                    sunmiPrintHelper.sendRawData(dataRaw);
-                                    result.success(true);
-                                    break;
-                                case "DEVICE_MODEL":
-                                    String deviceModel = sunmiPrintHelper.getDeviceModel();
-                                    result.success(deviceModel);
-                                    break;
-                                case "PRINT_PAPER":
-                                    String getPrintPaper = sunmiPrintHelper.getPrinterPaper();
-                                    result.success(getPrintPaper);
-                                    break;
-                                case "FEED_PAPER":
-                                    sunmiPrintHelper.feedPaper();
-                                    result.success(true);
-                                    break;
-                                case "BACK_LABEL_MODE":
-                                    boolean isBackkLabel = sunmiPrintHelper.isBlackLabelMode();
-                                    result.success(isBackkLabel);
-                                    break;
-                                case "LABEL_MODEL":
-                                    boolean isLabelMode = sunmiPrintHelper.isLabelMode();
-                                    result.success(isLabelMode);
-                                    break;
-                                case "PRINT_TRANS":
-                                    sunmiPrintHelper.printTrans(null);
-                                    result.success(true);
-                                    break;
-                                case "CONTROL_LCD":
-                                    int flag = call.argument("flag");
-                                    sunmiPrintHelper.controlLcd(flag);
-                                    result.success(true);
-                                    break;
-                                case "SEND_TEXT_TOLCD":
-                                    sunmiPrintHelper.sendTextToLcd();
-                                    result.success(true);
-                                    break;
-                                case "SEND_TEXTS_TOLCD":
-                                    sunmiPrintHelper.sendTextsToLcd();
-                                    result.success(true);
-                                    break;
-                                case "SEND_PIC_TOLCD":
-                                    Bitmap pic = call.argument("pic");
-                                    sunmiPrintHelper.sendPicToLcd(pic);
-                                    result.success(true);
-                                    break;
-                                case "PRINT_ONE_LABEL":
-                                    sunmiPrintHelper.printOneLabel();
-                                    result.success(true);
-                                    break;
-                                case "PRINT_MULTILABEL":
-                                    int num = call.argument("num");
-                                    sunmiPrintHelper.printMultiLabel(num);
-                                    result.success(true);
-                                    break;
-                                case "PRINTE_HEAD":
-                                    sunmiPrintHelper.getPrinterHead(null);
-                                    result.success(true);
-                                    break;
-                                case "PRINTE_DISTANCE":
-                                    sunmiPrintHelper.getPrinterDistance(null);
-                                    result.success(true);
-                                    break;
+                    sunmiPrintHelper.printTable(colsText, colsWidth, colsAlign, fontSize);
+                    result.success(true);
+                } catch (Exception err) {
+                    Log.d("SunmiPrinter", err.getMessage());
+                }
+                break;
+            case "PRINT_BITMAP":
+                Bitmap bitmap = call.argument("bitmap");
+                int orientation = call.argument("orientation");
+                sunmiPrintHelper.printBitmap(bitmap, orientation);
+                result.success(true);
+                break;
+            case "PRINT_STATUS":
+                sunmiPrintHelper.showPrinterStatus();
+                result.success(true);
+                break;
+            case "OPEN_CASH_BOX":
+                sunmiPrintHelper.openCashBox();
+                result.success(true);
+                break;
+            case "SENT_RAW_DATA":
+                byte[] dataRaw = call.argument("data");
+                sunmiPrintHelper.sendRawData(dataRaw);
+                result.success(true);
+                break;
+            case "DEVICE_MODEL":
+                String deviceModel = sunmiPrintHelper.getDeviceModel();
+                result.success(deviceModel);
+                break;
+            case "PRINT_PAPER":
+                String getPrintPaper = sunmiPrintHelper.getPrinterPaper();
+                result.success(getPrintPaper);
+                break;
+            case "FEED_PAPER":
+                sunmiPrintHelper.feedPaper();
+                result.success(true);
+                break;
+            case "BACK_LABEL_MODE":
+                boolean isBackkLabel = sunmiPrintHelper.isBlackLabelMode();
+                result.success(isBackkLabel);
+                break;
+            case "LABEL_MODEL":
+                boolean isLabelMode = sunmiPrintHelper.isLabelMode();
+                result.success(isLabelMode);
+                break;
+            case "PRINT_TRANS":
+                sunmiPrintHelper.printTrans(null);
+                result.success(true);
+                break;
+            case "CONTROL_LCD":
+                int flag = call.argument("flag");
+                sunmiPrintHelper.controlLcd(flag);
+                result.success(true);
+                break;
+            case "SEND_TEXT_TOLCD":
+                sunmiPrintHelper.sendTextToLcd();
+                result.success(true);
+                break;
+            case "SEND_TEXTS_TOLCD":
+                sunmiPrintHelper.sendTextsToLcd();
+                result.success(true);
+                break;
+            case "SEND_PIC_TOLCD":
+                Bitmap pic = call.argument("pic");
+                sunmiPrintHelper.sendPicToLcd(pic);
+                result.success(true);
+                break;
+            case "PRINT_ONE_LABEL":
+                sunmiPrintHelper.printOneLabel();
+                result.success(true);
+                break;
+            case "PRINT_MULTILABEL":
+                int num = call.argument("num");
+                sunmiPrintHelper.printMultiLabel(num);
+                result.success(true);
+                break;
+            case "PRINTE_HEAD":
+                sunmiPrintHelper.getPrinterHead(null);
+                result.success(true);
+                break;
+            case "PRINTE_DISTANCE":
+                sunmiPrintHelper.getPrinterDistance(null);
+                result.success(true);
+                break;
 
-                            }
-//                        });
+        }
+        // });
     }
 }

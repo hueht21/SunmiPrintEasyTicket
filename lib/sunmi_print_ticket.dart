@@ -24,6 +24,38 @@ class SunmiPrinter {
     return status;
   }
 
+  ///*startTransactionPrint*
+  ///
+  ///If you want to print in one transaction, you can start the transaction, build your print commands without send to the buffer
+  static Future<void> startTransactionPrint([bool clear = false]) async {
+    Map<String, dynamic> arguments = <String, dynamic>{"clearEnter": clear};
+    await platform.invokeMethod("ENTER_PRINTER_BUFFER", arguments);
+  }
+
+  ///*submitTransactionPrint*
+  ///
+  ///This method will submit your transaction to the bufffer
+  static Future<void> submitTransactionPrint() async {
+    await platform.invokeMethod("COMMIT_PRINTER_BUFFER");
+  }
+
+  ///*exitTransactionPrint*
+  ///
+  ///This method will close the transaction
+
+  static Future<void> exitTransactionPrint([bool clear = true]) async {
+    Map<String, dynamic> arguments = <String, dynamic>{"clearExit": clear};
+    await platform.invokeMethod("EXIT_PRINTER_BUFFER", arguments);
+  }
+
+  ///*resetFontSize*
+  ///
+  ///This method will reset the font size to the medium (default) size
+  static Future<void> resetFontSize() async {
+    Map<String, dynamic> arguments = <String, dynamic>{"size": 24};
+    await platform.invokeMethod("FONT_SIZE", arguments);
+  }
+
   static Future<void> startPrinterExam() async {
     // in ví dụ
     await platform.invokeMethod('PRINTER_EXAMPLE');
@@ -39,20 +71,44 @@ class SunmiPrinter {
     await platform.invokeMethod('LINE_WRAP', arguments);
   }
 
-  static Future<void> printText(
-      {required String text,
-      int? size,
-      bool? bold,
-      bool? underLine,
-      String? typeface}) async {
-    underLine ??= false;
-    bold ??= false;
-    size ??= 10;
+  ///*line*
+  ///
+  ///With this method you can draw a line to divide sections.
+  static Future<void> line({
+    String ch = '-',
+    int len = 31,
+  }) async {
+    resetFontSize();
+    await printText(text: List.filled(len, ch[0]).join());
+  }
+
+  ///*line*
+  ///
+  ///With this method you can draw a line to divide sections.
+  static Future<void> lineDash({
+    String ch = '- ',
+    int len = 18,
+  }) async {
+    resetFontSize();
+    await printText(text: List.filled(len, ch).join());
+  }
+
+  static Future<void> printText({
+    required String text,
+    int size = 24,
+    bool bold = false,
+    bool underLine = false,
+    String? typeface,
+    bool isLight = false,
+    bool isExtra = false,
+  }) async {
     Map<String, dynamic> arguments = <String, dynamic>{
       "text": '$text\n',
       "size": size,
       "bold": bold,
-      "under_line": underLine
+      "under_line": underLine,
+      "is_light": isLight,
+      "is_extra": isExtra
     };
     await platform.invokeMethod("PRINT_TEXT", arguments);
   }
