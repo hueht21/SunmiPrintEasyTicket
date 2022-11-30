@@ -1,7 +1,7 @@
 # sunmi_printer_easyticket
 
 # I have implemented a lot of other features described below, the typeface is bolder
-# I have updated version 1.0.5 with more features
+# I have updated version 1.0.6 with more features
 # Important:
 **THIS PACKAGE WILL WORK ONLY IN ANDROID!**
 - [x] Jump (n) lines
