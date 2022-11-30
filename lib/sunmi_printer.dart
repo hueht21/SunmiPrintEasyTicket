@@ -76,10 +76,10 @@ class SunmiPrinter {
   ///With this method you can draw a line to divide sections.
   static Future<void> line({
     String ch = '-',
-    int len = 128,
+    int len = 31,
   }) async {
     resetFontSize();
-    await printText(text: List.filled(len, ch).join());
+    await printText(text: List.filled(len, ch[0]).join());
   }
 
   ///*line*
@@ -87,26 +87,28 @@ class SunmiPrinter {
   ///With this method you can draw a line to divide sections.
   static Future<void> lineDash({
     String ch = '- ',
-    int len = 64,
+    int len = 18,
   }) async {
     resetFontSize();
     await printText(text: List.filled(len, ch).join());
   }
 
-  static Future<void> printText(
-      {required String text,
-      int? size,
-      bool? bold,
-      bool? underLine,
-      String? typeface}) async {
-    underLine ??= false;
-    bold ??= false;
-    size ??= 10;
+  static Future<void> printText({
+    required String text,
+    int size = 24,
+    bool bold = false,
+    bool underLine = false,
+    String? typeface,
+    bool isLight = false,
+    bool isExtra = false,
+  }) async {
     Map<String, dynamic> arguments = <String, dynamic>{
       "text": '$text\n',
       "size": size,
       "bold": bold,
-      "under_line": underLine
+      "under_line": underLine,
+      "is_light": isLight,
+      "is_extra": isExtra
     };
     await platform.invokeMethod("PRINT_TEXT", arguments);
   }

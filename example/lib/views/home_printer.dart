@@ -143,7 +143,7 @@ class HomePrinterView extends StatelessWidget {
                       text:
                           "${AppConst.ncc} ${AppConst.nameCompanyNCC} - ${AppConst.nameTaxCode} ${AppConst.taxCode} \n \t ${AppConst.custommerService} ${AppConst.phoneCustomerService}",
                       bold: true,
-                      size: 17);
+                      size: 20);
 
                   await SunmiPrinter.printLine(3);
                   await SunmiPrinter.cutPaper();
@@ -191,27 +191,34 @@ class HomePrinterView extends StatelessWidget {
                 onPressed: () async {
                   await SunmiPrinter.bindPrinterService();
                   await SunmiPrinter.startPrinter();
+                  await SunmiPrinter.lineDash();
                   await SunmiPrinter.printText(
-                    text: "cộng hòa xã hội chủ nghĩa việt nam",
-                    size: 10,
+                    text: "fontLight: cộng hòa xã hội chủ nghĩa việt nam",
+                    size: 25,
+                    isLight: true,
                   );
                   await SunmiPrinter.printText(
-                    text: "cộng hòa xã hội chủ nghĩa việt nam",
-                    size: 15,
+                    text: "Extra: cộng hòa xã hội chủ nghĩa việt nam",
+                    size: 25,
+                    isExtra: true,
                   );
                   await SunmiPrinter.printText(
-                    text: "cộng hòa xã hội chủ nghĩa việt nam",
-                    size: 20,
+                    text: "Bold: cộng hòa xã hội chủ nghĩa việt nam",
+                    size: 25,
                     bold: true,
                   );
                   await SunmiPrinter.printText(
-                    text: "cộng hòa xã hội chủ nghĩa việt nam",
-                    size: 35,
+                    text: "Medium:cộng hòa xã hội chủ nghĩa việt nam",
+                    size: 25,
                   );
                   await SunmiPrinter.printText(
-                      text: "cộng hòa xã hội chủ nghĩa việt nam",
-                      size: 35,
-                      bold: true);
+                    text: "default: cộng hòa xã hội chủ nghĩa việt nam",
+                  );
+                  await SunmiPrinter.line(len: 25);
+                  // await SunmiPrinter.printText(
+                  //     text: "cộng hòa xã hội chủ nghĩa việt nam",
+                  //     size: 35,
+                  //     bold: true);
                   await SunmiPrinter.printLine(3);
                   await SunmiPrinter.cutPaper();
                   await SunmiPrinter.unbindPrinterService();

@@ -20,19 +20,20 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
     private String CHANNEL = "sunmi_print_easyticket_b08/method_channel";
     String bigFont = "BeVietnamPro-Medium.ttf";
     String bigFontBold = "BeVietnamPro-Bold.ttf";
-    // String smallFontBold = "BeVietnamPro-Regular.ttf";
-    // String smallFont = "BeVietnamPro-Light.ttf";
+    String fontExtraBold = "BeVietnamPro-ExtraBold.ttf";
+    String fontLight = "BeVietnamPro-Light.ttf";
     String typeFont = "";
 
     SunmiPrintHelper sunmiPrintHelper;
 
-    private void checkFont(int size, boolean isBold) {
-        // lấy 20 làm size giữa
-        // if (size >= 25) {
+    private void checkFont(boolean isBold, boolean isLight, boolean isExtra) {
+        if (isExtra) {
+            typeFont = fontExtraBold;
+        } else if (isLight) {
+            typeFont = fontLight;
+        } else {
             typeFont = isBold ? bigFontBold : bigFont;
-        // } else {
-        //     typeFont = isBold ? smallFontBold : smallFont;
-        // }
+        }
 
     }
 
@@ -80,8 +81,10 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                 String text = call.argument("text");
                 boolean bold = call.argument("bold");
                 boolean underLine = call.argument("under_line");
+                boolean isLight = call.argument("under_line");
+                boolean isExtra = call.argument("under_line");
                 int size = call.argument("size");
-                checkFont(size, bold);
+                checkFont(bold, isLight, isExtra);
                 sunmiPrintHelper.printText(text, size, bold, underLine, typeFont);
                 result.success(true);
                 break;
