@@ -368,6 +368,19 @@ public class SunmiPrintHelper {
         }
 
     }
+    public void printDrawRow(){
+        if(sunmiPrinterService == null){
+            //TODO Service disconnection processing
+            return;
+        }
+        try {
+            String content = "-----------------------------------------------------------------";
+            sunmiPrinterService.printTextWithFont(content, "OpenSans-Bold.ttf", 18, null);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      * print Bar Code
@@ -697,10 +710,10 @@ public class SunmiPrintHelper {
      * Used to report the real-time query status of the printer, which can be used before each
      * printing
      */
-    public void showPrinterStatus(){
+    public String showPrinterStatus(){
         if(sunmiPrinterService == null){
             //TODO Service disconnection processing
-            return ;
+            return "";
         }
         String result = "Interface is too low to implement interface";
         try {
@@ -743,6 +756,7 @@ public class SunmiPrintHelper {
             e.printStackTrace();
         }
         Toast.makeText(_context, result, Toast.LENGTH_LONG).show();
+        return result;
     }
 
     /**

@@ -69,6 +69,9 @@ class SunmiPrinter {
   static Future<String> getPrinterSerialNo() async {
     return await platform.invokeMethod("PRINTER_SERIALNO");
   }
+  static Future<void> printDrawRow() async {
+    await platform.invokeMethod("PRINT_DRAW_ROW");
+  }
 
   static Future<void> printBarCode(
       {required String dataBarCode,
@@ -109,6 +112,46 @@ class SunmiPrinter {
     };
     await platform.invokeMethod("PRINT_TABLE", arguments);
   }
+  static Future<String> printStatus() async {
+    return await platform.invokeMethod("PRINT_STATUS");
+  }
+  static Future<String> getPrintPaper() async {
+    return await platform.invokeMethod("PRINT_PAPER");
+  }
+  static Future<void> feedPaper() async {
+    await platform.invokeMethod("FEED_PAPER");
+  }
+  static Future<bool> getBackLabelMode() async {
+    return await platform.invokeMethod("BACK_LABEL_MODE");
+  }
+  static Future<bool> getLabelModel() async {
+    return await platform.invokeMethod("LABEL_MODEL");
+  }
+  static Future<void> printTrans() async {
+    await platform.invokeMethod("PRINT_TRANS");
+  }
+  static Future<void> controlLCD(int flag) async {
+    Map<String, dynamic> arguments = <String, dynamic>{"flag": flag};
+    await platform.invokeMethod("CONTROL_LCD", arguments);
+  }
+  static Future<void> sentTextLCD() async {
+    await platform.invokeMethod("SEND_TEXT_TOLCD");
+  }
+  static Future<void> sentTextsLCD() async {
+    await platform.invokeMethod("SEND_TEXTS_TOLCD");
+  }
+  static Future<void> printMultiLabel(int num) async {
+    Map<String, dynamic> arguments = <String, dynamic>{"num": num};
+    await platform.invokeMethod("PRINT_MULTILABEL", arguments);
+  }
+  static Future<void> printeHead() async {
+    await platform.invokeMethod("PRINTE_HEAD");
+  }
+  static Future<void> printeDistance() async {
+    await platform.invokeMethod("PRINTE_DISTANCE");
+  }
+
+
 }
 
 class ColumnMaker {

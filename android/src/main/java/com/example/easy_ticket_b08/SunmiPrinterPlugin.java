@@ -125,6 +125,10 @@ public class SunmiPrinterPlugin  implements FlutterPlugin, MethodCallHandler {
                                     sunmiPrintHelper.printBarCode(dataBarCode, symbology, height, width, textposition);
                                     result.success(true);
                                     break;
+                                case "PRINT_DRAW_ROW" :
+                                    sunmiPrintHelper.printDrawRow();
+                                    result.success(true);
+                                    break;
                                 case "PRINT_QRCODE":
                                     String dataQRCode = call.argument("data");
                                     int modulesize = call.argument("modulesize");
@@ -163,8 +167,8 @@ public class SunmiPrinterPlugin  implements FlutterPlugin, MethodCallHandler {
                                     result.success(true);
                                     break;
                                 case "PRINT_STATUS":
-                                    sunmiPrintHelper.showPrinterStatus();
-                                    result.success(true);
+                                    String statusPrint = sunmiPrintHelper.showPrinterStatus();
+                                    result.success(statusPrint);
                                     break;
                                 case "OPEN_CASH_BOX":
                                     sunmiPrintHelper.openCashBox();
