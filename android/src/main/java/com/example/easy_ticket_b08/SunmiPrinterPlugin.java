@@ -81,8 +81,8 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                 String text = call.argument("text");
                 boolean bold = call.argument("bold");
                 boolean underLine = call.argument("under_line");
-                boolean isLight = call.argument("under_line");
-                boolean isExtra = call.argument("under_line");
+                boolean isLight = call.argument("is_light");
+                boolean isExtra = call.argument("is_extra");
                 int size = call.argument("size");
                 checkFont(bold, isLight, isExtra);
                 sunmiPrintHelper.printText(text, size, bold, underLine, typeFont);
