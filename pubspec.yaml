@@ -3,7 +3,7 @@ description: This is a printer product written by cudev
 homepage: https://github.com/hueht21/SunmiPrintEasyTicket
 
 
-version: 1.0.3
+version: 1.0.4
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
