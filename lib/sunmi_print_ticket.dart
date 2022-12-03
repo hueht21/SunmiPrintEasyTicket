@@ -121,6 +121,11 @@ class SunmiPrinter {
   static Future<String> getPrinterVersion() async {
     return await platform.invokeMethod("PRINTER_VERSION");
   }
+  static Future<void> printImage(Uint8List img) async {
+    Map<String, dynamic> arguments = <String, dynamic>{};
+    arguments.putIfAbsent("bitmap", () => img);
+    await platform.invokeMethod("PRINT_IMAGE", arguments);
+  }
 
   static Future<String> getPrinterSerialNo() async {
     return await platform.invokeMethod("PRINTER_SERIALNO");

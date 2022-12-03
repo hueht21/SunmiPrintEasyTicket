@@ -346,6 +346,7 @@ public class SunmiPrintHelper {
         }
     }
 
+
     /**
      *  Due to the distance between the paper hatch and the print head,
      *  the paper needs to be fed out automatically
@@ -407,6 +408,7 @@ public class SunmiPrintHelper {
         }
 
     }
+
     public void printDrawRow(){
         if(sunmiPrinterService == null){
             //TODO Service disconnection processing

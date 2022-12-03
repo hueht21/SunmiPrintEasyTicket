@@ -1,6 +1,7 @@
 package com.example.easy_ticket_b08;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -107,6 +108,13 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                 sunmiPrintHelper.printText(text, size, bold, underLine, typeFont);
                 result.success(true);
                 break;
+            case "PRINT_IMAGE":
+                byte[] bytes = call.argument("bitmap");
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                sunmiPrintHelper.printBitmap(bitmap,0);
+                result.success(true);
+
+                break;
             case "CUT_PAPER":
                 sunmiPrintHelper.cutpaper();
                 result.success(true);
@@ -172,12 +180,12 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                     Log.d("SunmiPrinter", err.getMessage());
                 }
                 break;
-            case "PRINT_BITMAP":
-                Bitmap bitmap = call.argument("bitmap");
-                int orientation = call.argument("orientation");
-                sunmiPrintHelper.printBitmap(bitmap, orientation);
-                result.success(true);
-                break;
+//            case "PRINT_BITMAP":
+//                Bitmap bitmap = call.argument("bitmap");
+//                int orientation = call.argument("orientation");
+//                sunmiPrintHelper.printBitmap(bitmap, orientation);
+//                result.success(true);
+//                break;
             case "PRINT_STATUS":
                 sunmiPrintHelper.showPrinterStatus();
                 result.success(true);
