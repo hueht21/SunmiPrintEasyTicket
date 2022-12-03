@@ -18,7 +18,7 @@ class SunmiPrinter {
     return status;
   }
 
-  static Future<bool?> startPrinter() async {
+  static Future<bool?> initPrinter() async {
     // start máy in
     final bool? status = await platform.invokeMethod('INIT_PRINTER');
     return status;

@@ -77,6 +77,25 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                 sunmiPrintHelper.initPrinter();
                 result.success(true);
                 break;
+            case "ENTER_PRINTER_BUFFER":
+                Boolean clearEnter  = call.argument("clearEnter");
+                sunmiPrintHelper.exitPrinterBuffer(clearEnter);
+                result.success(true);
+                break;
+            case "EXIT_PRINTER_BUFFER":
+                Boolean clear = call.argument("clearExit");
+                sunmiPrintHelper.exitPrinterBuffer(clear);
+                result.success(true);
+                break;
+            case "COMMIT_PRINTER_BUFFER":
+                sunmiPrintHelper.commitPrinterBuffer();
+                result.success(true);
+                break;
+            case "FONT_SIZE":
+                int fontSize = call.argument("size");
+                sunmiPrintHelper.setFontSize(fontSize);
+                result.success(true);
+                break;
             case "PRINT_TEXT":
                 String text = call.argument("text");
                 boolean bold = call.argument("bold");
@@ -131,7 +150,7 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                 break;
             case "PRINT_TABLE":
                 String colsStr = call.argument("cols");
-                int fontSize = call.argument("size");
+                int fontSizeT = call.argument("size");
                 try {
                     JSONArray cols = new JSONArray(colsStr);
                     String[] colsText = new String[cols.length()];
@@ -147,7 +166,7 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                         colsAlign[i] = alignColumn;
                     }
 
-                    sunmiPrintHelper.printTable(colsText, colsWidth, colsAlign, fontSize);
+                    sunmiPrintHelper.printTable(colsText, colsWidth, colsAlign, fontSizeT);
                     result.success(true);
                 } catch (Exception err) {
                     Log.d("SunmiPrinter", err.getMessage());

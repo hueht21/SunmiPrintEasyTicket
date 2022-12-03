@@ -121,6 +121,15 @@ public class SunmiPrintHelper {
         //TODO process when get one exception
     }
 
+
+    public void commitPrinterBuffer() {
+        try {
+            sunmiPrinterService.commitPrinterBuffer();
+        } catch (RemoteException e) {
+        } catch (NullPointerException e) {
+        }
+    }
+
     /**
      * send esc cmd
      */
@@ -165,6 +174,21 @@ public class SunmiPrintHelper {
             sunmiPrinterService.printerInit(null);
         } catch (RemoteException e) {
             handleRemoteException(e);
+        }
+    }
+    public void enterPrinterBuffer(Boolean clear) {
+        try {
+            sunmiPrinterService.enterPrinterBuffer(clear);
+        } catch (RemoteException e) {
+        } catch (NullPointerException e) {
+        }
+    }
+
+    public void exitPrinterBuffer(Boolean clear){
+        try {
+            sunmiPrinterService.exitPrinterBuffer(clear);
+        } catch (RemoteException e) {
+        } catch (NullPointerException e) {
         }
     }
 
@@ -303,6 +327,21 @@ public class SunmiPrintHelper {
         try {
             sunmiPrinterService.setAlignment(align, null);
         } catch (RemoteException e) {
+            handleRemoteException(e);
+        }
+    }
+
+    /**
+     * Set font size
+     */
+    public void setFontSize(int fontSize){
+        if(sunmiPrinterService == null){
+            //TODO Service disconnection processing
+            return;
+        }
+        try {
+            sunmiPrinterService.setFontSize(fontSize, null);
+        } catch (RemoteException e){
             handleRemoteException(e);
         }
     }

@@ -25,7 +25,8 @@ class HomePrinterView extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   await SunmiPrinter.bindPrinterService();
-                  await SunmiPrinter.startPrinter();
+                  await SunmiPrinter.initPrinter();
+                  await SunmiPrinter.startTransactionPrint(true);
                   await SunmiPrinter.printText(
                       text: AppConst.nameCompany, bold: true, size: 20);
                   await SunmiPrinter.printText(
@@ -67,7 +68,9 @@ class HomePrinterView extends StatelessWidget {
                       bold: true,
                       size: 17);
                   await SunmiPrinter.printLine(3);
-                  await SunmiPrinter.cutPaper();
+                  //await SunmiPrinter.cutPaper();
+                  await SunmiPrinter.submitTransactionPrint();
+                  await SunmiPrinter.exitTransactionPrint(true);
                   await SunmiPrinter.unbindPrinterService();
                 },
                 child: const Text("In vé"),
@@ -78,7 +81,7 @@ class HomePrinterView extends StatelessWidget {
                 // in table
                 onPressed: () async {
                   await SunmiPrinter.bindPrinterService();
-                  await SunmiPrinter.startPrinter();
+                  await SunmiPrinter.initPrinter();
                   await SunmiPrinter.printTable(size: 21, cols: [
                     ColumnMaker(text: 'Name', width: 10, align: 0),
                     ColumnMaker(text: 'Qty', width: 6, align: 1),
@@ -97,7 +100,7 @@ class HomePrinterView extends StatelessWidget {
                     ColumnMaker(text: '30.00000', width: 10, align: 2),
                     ColumnMaker(text: '120.00000', width: 10, align: 2),
                   ]);
-                  //await SunmiPrinter.startPrinterExam();
+                  //await SunmiPrinter.initPrinterExam();
                   await SunmiPrinter.printLine(3);
                   await SunmiPrinter.cutPaper();
                   await SunmiPrinter.unbindPrinterService();
@@ -109,7 +112,7 @@ class HomePrinterView extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   await SunmiPrinter.bindPrinterService();
-                  await SunmiPrinter.startPrinter();
+                  await SunmiPrinter.initPrinter();
                   await SunmiPrinter.printText(
                       text: AppConst.nameCompany2, bold: true, size: 20);
                   await SunmiPrinter.printText(
@@ -165,7 +168,7 @@ class HomePrinterView extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   await SunmiPrinter.bindPrinterService();
-                  await SunmiPrinter.startPrinter();
+                  await SunmiPrinter.initPrinter();
                   await SunmiPrinter.printBarCode(
                       dataBarCode: "0123648445",
                       symbology: 1,
@@ -182,7 +185,7 @@ class HomePrinterView extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   await SunmiPrinter.bindPrinterService();
-                  await SunmiPrinter.startPrinter();
+                  await SunmiPrinter.initPrinter();
                   await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.printQr(
                       dataQRCode: "https://github.com/hueht21",
