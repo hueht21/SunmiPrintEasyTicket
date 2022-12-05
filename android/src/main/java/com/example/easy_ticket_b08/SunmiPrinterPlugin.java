@@ -2,6 +2,16 @@ package com.example.easy_ticket_b08;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.graphics.fonts.Font;
+
+import java.awt.*;
+import javax.swing.*;
+import java.applet.*;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -16,6 +26,8 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+
+
 
 public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
     private String CHANNEL = "sunmi_print_easyticket_b08/method_channel";
@@ -56,11 +68,6 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-        // super.configureFlutterEngine(flutterEngine);
-        // new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(),
-        // CHANNEL)
-        // .setMethodCallHandler(
-        // (call, result) -> {
         switch (call.method) {
             case "BIND_PRINTER_SERVICE":
                 sunmiPrintHelper.initSunmiPrinterService();
@@ -105,13 +112,14 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                 boolean isExtra = call.argument("is_extra");
                 int size = call.argument("size");
                 checkFont(bold, isLight, isExtra);
+                //Log.d("CHECKK",totalChar(text) + "");
                 sunmiPrintHelper.printText(text, size, bold, underLine, typeFont);
                 result.success(true);
                 break;
             case "PRINT_IMAGE":
                 byte[] bytes = call.argument("bitmap");
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                sunmiPrintHelper.printBitmap(bitmap,0);
+                sunmiPrintHelper.printBitmap(bitmap,1);
                 result.success(true);
 
                 break;
@@ -180,12 +188,6 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                     Log.d("SunmiPrinter", err.getMessage());
                 }
                 break;
-//            case "PRINT_BITMAP":
-//                Bitmap bitmap = call.argument("bitmap");
-//                int orientation = call.argument("orientation");
-//                sunmiPrintHelper.printBitmap(bitmap, orientation);
-//                result.success(true);
-//                break;
             case "PRINT_STATUS":
                 sunmiPrintHelper.showPrinterStatus();
                 result.success(true);
@@ -258,8 +260,19 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                 sunmiPrintHelper.getPrinterDistance(null);
                 result.success(true);
                 break;
-
+//            case "PRINTE_TEST":
+//                String test = call.argument("text_test");
+//                int kq = totalChar(test);
+//                result.success(kq);
+//                break;
         }
-        // });
     }
+//    int totalChar(String textt,Graphics g){
+//
+//
+//        int width = g.getFontMetrics().stringWidth(text);
+//        return width;
+//
+//       // tính ra mimlimet từng từ với từng size chữ rồi cộng lại với nhau = 58mm nếu quá 58mm thì cụm từ đấy phải xuống dòng
+//    }
 }
