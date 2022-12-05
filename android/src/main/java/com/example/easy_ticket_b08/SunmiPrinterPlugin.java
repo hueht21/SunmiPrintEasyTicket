@@ -7,6 +7,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.fonts.Font;
+
+import java.awt.*;
+import javax.swing.*;
+import java.applet.*;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -107,6 +112,7 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                 boolean isExtra = call.argument("is_extra");
                 int size = call.argument("size");
                 checkFont(bold, isLight, isExtra);
+                //Log.d("CHECKK",totalChar(text) + "");
                 sunmiPrintHelper.printText(text, size, bold, underLine, typeFont);
                 result.success(true);
                 break;
@@ -254,6 +260,19 @@ public class SunmiPrinterPlugin implements FlutterPlugin, MethodCallHandler {
                 sunmiPrintHelper.getPrinterDistance(null);
                 result.success(true);
                 break;
+//            case "PRINTE_TEST":
+//                String test = call.argument("text_test");
+//                int kq = totalChar(test);
+//                result.success(kq);
+//                break;
         }
     }
+//    int totalChar(String textt,Graphics g){
+//
+//
+//        int width = g.getFontMetrics().stringWidth(text);
+//        return width;
+//
+//       // tính ra mimlimet từng từ với từng size chữ rồi cộng lại với nhau = 58mm nếu quá 58mm thì cụm từ đấy phải xuống dòng
+//    }
 }

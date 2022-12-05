@@ -290,6 +290,11 @@ class SunmiPrinter {
   static Future<void> printeDistance() async {
     await platform.invokeMethod("PRINTE_DISTANCE");
   }
+  // static Future<int> getTextSize(String text) async {
+  //   Map<String, dynamic> argument = {"text_test" : text };
+  //   int a = await platform.invokeMethod("PRINTE_TEST", a);
+  //   return a;
+  // }
 }
 
 class ColumnMaker {

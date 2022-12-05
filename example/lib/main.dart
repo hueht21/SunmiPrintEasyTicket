@@ -216,8 +216,9 @@ class HomePrinterView extends StatelessWidget {
                   await SunmiPrinter.bindPrinterService();
                   await SunmiPrinter.initPrinter();
                   await SunmiPrinter.startTransactionPrint(true);
-                  String a = await SunmiPrinter.getPrintPaper();
-                  log(a);
+                  // String a = await SunmiPrinter.getPrintPaper();
+                  // log(a);
+                 // await SunmiPrinter.getTextSize(AppConst.nameCompany);
                   await SunmiPrinter.printLine(3);
                   await SunmiPrinter.submitTransactionPrint();
                   await SunmiPrinter.exitTransactionPrint(true);
