@@ -489,14 +489,8 @@ public class SunmiPrintHelper {
         try {
             if(orientation == 0){
                 sunmiPrinterService.printBitmap(bitmap, null);
-                sunmiPrinterService.printText("横向排列\n", null);
-                sunmiPrinterService.printBitmap(bitmap, null);
-                sunmiPrinterService.printText("横向排列\n", null);
             }else{
                 sunmiPrinterService.printBitmap(bitmap, null);
-                sunmiPrinterService.printText("\n纵向排列\n", null);
-                sunmiPrinterService.printBitmap(bitmap, null);
-                sunmiPrinterService.printText("\n纵向排列\n", null);
             }
         } catch (RemoteException e) {
             e.printStackTrace();
