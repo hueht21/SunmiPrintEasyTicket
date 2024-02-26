@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class SunmiPrinter {
@@ -93,6 +95,31 @@ class SunmiPrinter {
     await printText(text: List.filled(len, ch).join());
   }
 
+  static int checkSizeLength(int size){
+    int lenght = 0;
+    switch (size) {
+      case 17:
+        lenght = 37;
+        break;
+      case 18:
+        lenght = 36;
+        break;
+      case 19:
+        lenght = 33;
+        break;
+      case 20:
+        lenght = 31;
+        break;
+      case 21:
+        lenght = 31;
+        break;
+      case 22:
+        lenght = 27;
+        break;
+    }
+    return lenght;
+    
+  }
   static Future<void> printText({
     required String text,
     int size = 24,
@@ -102,6 +129,8 @@ class SunmiPrinter {
     bool isLight = false,
     bool isExtra = false,
   }) async {
+
+    //log("${text.length}");
     Map<String, dynamic> arguments = <String, dynamic>{
       "text": '$text\n',
       "size": size,
@@ -110,7 +139,57 @@ class SunmiPrinter {
       "is_light": isLight,
       "is_extra": isExtra
     };
+    var sizee = calcTextSize(text, TextStyle(fontSize: size.toDouble()));
+
+    log("${sizee} ${size}");
+    //await cutRope(text : text, arguments : arguments, size : size, bold : bold, isLight : isLight, isExtra :isExtra);
     await platform.invokeMethod("PRINT_TEXT", arguments);
+  }
+  static Size calcTextSize(String text, TextStyle style) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: TextDirection.ltr,
+      textScaleFactor: WidgetsBinding.instance.window.textScaleFactor,
+    )..layout();
+    return textPainter.size;
+  }
+  static Future<void> cutRope({
+    required String text,
+    required Map<String, dynamic> arguments,
+    int size = 24,
+    bool bold = false,
+    bool underLine = false,
+    String? typeface,
+    bool isLight = false,
+    bool isExtra = false,
+  }) async {
+
+    List resule = text.split(" ");
+    log("${resule}");
+    int lengthText = 0;
+    for(int i= 0 ;i<resule.length;i++){
+     
+      String lengthResule = resule[i];
+      lengthText = lengthText +lengthResule.length + 1;
+      if(lengthText > checkSizeLength(size)){
+        resule[i] = "\n ${resule[i]}";
+        lengthText = 0;
+        lengthText = lengthText +lengthResule.length + 1;
+      }
+      Map<String, dynamic> arguments = {
+        "text": '${resule[i]} ',
+        "size": size,
+        "bold": bold,
+        "under_line": underLine,
+        "is_light": isLight,
+        "is_extra": isExtra
+      };
+      
+      log("${lengthText}");
+
+       await platform.invokeMethod("PRINT_TEXT", arguments);
+    }
+
   }
 
   static Future<void> setAlignment(int value) async {
@@ -211,8 +290,11 @@ class SunmiPrinter {
   static Future<void> printeDistance() async {
     await platform.invokeMethod("PRINTE_DISTANCE");
   }
-
-
+  // static Future<int> getTextSize(String text) async {
+  //   Map<String, dynamic> argument = {"text_test" : text };
+  //   int a = await platform.invokeMethod("PRINTE_TEST", a);
+  //   return a;
+  // }
 }
 
 class ColumnMaker {
@@ -246,4 +328,5 @@ class ColumnMaker {
       "align": value.toString(),
     };
   }
+
 }

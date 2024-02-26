@@ -1,4 +1,5 @@
-import 'dart:typed_data';
+
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -212,17 +213,18 @@ class HomePrinterView extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: ()  async {
+                  await SunmiPrinter.bindPrinterService();
                   await SunmiPrinter.initPrinter();
-
-                  Uint8List byte =
-                      await _getImageFromAsset('assets/images/dash.jpg');
-                  await SunmiPrinter.setAlignment(1);
                   await SunmiPrinter.startTransactionPrint(true);
-                  await SunmiPrinter.printImage(byte);
-                  await SunmiPrinter.printLine(2);
+                  // String a = await SunmiPrinter.getPrintPaper();
+                  // log(a);
+                 // await SunmiPrinter.getTextSize(AppConst.nameCompany);
+                  await SunmiPrinter.printLine(3);
+                  await SunmiPrinter.submitTransactionPrint();
                   await SunmiPrinter.exitTransactionPrint(true);
+                  await SunmiPrinter.unbindPrinterService();
                 },
-                child: Text("In ảnh"),
+                child: Text("In text"),
               ),
             ),
           ],
@@ -230,18 +232,10 @@ class HomePrinterView extends StatelessWidget {
       ),
     );
   }
-  Future<Uint8List> _getImageFromAsset(String iconPath) async {
-    return await readFileBytes(iconPath);
-  }
-  Future<Uint8List> readFileBytes(String path) async {
-    ByteData fileData = await rootBundle.load(path);
-    Uint8List fileUnit8List = fileData.buffer
-        .asUint8List(fileData.offsetInBytes, fileData.lengthInBytes);
-    return fileUnit8List;
-  }
 }
 
 class AppConst {
+  static const String tesst = "123456789123456789123456789123456789";
   static const String nameCompany = "CÔNG TY TNHH GIẢI PHÁP ĐÔ THỊ NAM HẢI";
   static const String addressConpany = "Số 33 Ngõ 151 Láng Hạ, Đống Đa, Hà Nội";
   static const String nameTicket = "VÉ TRÔNG GIỮ XE Ô TÔ";
